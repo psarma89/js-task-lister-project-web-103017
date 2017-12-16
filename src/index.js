@@ -5,10 +5,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const newList = document.getElementById('new-list-title');
   const newListButton = document.querySelector('form#create-list-form input[type=submit]');
   const newTaskButton = document.querySelector('form#create-task-form input[type=submit]');
+  const taskForm = document.querySelector('form#create-task-form');
   const listSelect = document.querySelector('form#create-task-form select#parent-list');
   const listSection = document.querySelector('section#lists');
   const taskDescription = document.querySelector('form#create-task-form input[type=text]#new-task-description');
   const priorityLevel = document.querySelector('form#create-task-form input[type=text]#new-task-priority');
+
+  if (!listSelect.value) {
+    taskForm.style.display = "none"
+  }
 
   function fixId(text,obj){
     if (obj) {
@@ -41,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
       listSection.appendChild(div);
 
       newList.value = "";
+      taskForm.style.display = ""
     }
   })
 
@@ -59,11 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const listId = listSelect.selectedOptions[0].class
       const list = List.findList(listId)
       if (priorityLevel.value) {
-        const task = new Task(taskDescription.value, list)
-        task.priority = priorityLevel.value
+        new Task(taskDescription.value, list, priorityLevel.value)
+        // task.priority = priorityLevel.value
       }else {
-        const task = new Task(taskDescription.value, list)
-        task.priority = "low"
+        new Task(taskDescription.value, list)
+        // task.priority = "low"
       }
       const listDivUl = document.querySelector(`section#lists div#${fixId(list.title, list)} ul`);
       // console.log(listDiv)
