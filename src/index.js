@@ -1,98 +1,145 @@
-let store = {tasks: [], lists: []};
+// let store = {tasks: [], lists: []};
 document.addEventListener('DOMContentLoaded', () => {
   // your code here ....
   // console.log(Task)
   const newList = document.getElementById('new-list-title');
   const newListButton = document.querySelector('form#create-list-form input[type=submit]');
-  const newTaskButton = document.querySelector('form#create-task-form input[type=submit]');
   const taskForm = document.querySelector('form#create-task-form');
-  const listSelect = document.querySelector('form#create-task-form select#parent-list');
+  const newTaskButton = taskForm.querySelector('input[type=submit]');
+  const listSelect = taskForm.querySelector('select#parent-list');
   const listSection = document.querySelector('section#lists');
-  const taskDescription = document.querySelector('form#create-task-form input[type=text]#new-task-description');
-  const priorityLevel = document.querySelector('form#create-task-form input[type=text]#new-task-priority');
+  const taskDescription = taskForm.querySelector('input[type=text]#new-task-description');
+  const priorityLevel = taskForm.querySelector('input[type=text]#new-task-priority');
 
-  if (!listSelect.value) {
-    taskForm.style.display = "none"
-  }
+  taskForm.style.display = "none"
 
-  function fixId(text,obj){
+  function createElementId(text,obj){
     if (obj) {
       return `${text.split(' ').join('-')}-${obj.id}`
     }else {
       return `${text.split(' ').join('-')}`
     }
   }
+
+  function displayOptions(list){
+    const option = document.createElement('option');
+    option.value = list.title;
+    option.innerText = list.title;
+    option.id = createElementId(list.title,list);
+    option.class = list.id;
+    listSelect.appendChild(option);
+  }
+
+  function displayTasks(list){
+    const div = document.createElement('div');
+    const h2 = document.createElement('h2');
+    const button = document.createElement('button')
+    button.innerText = 'X';
+    button.type = "button";
+    button.id = createElementId(list.title, list);
+    button.class = list.id;
+    div.id = createElementId(list.title, list);
+    h2.appendChild(button);
+    h2.innerHTML += list.title;
+    div.appendChild(h2);
+    listSection.appendChild(div);
+  }
+
+  function displayAllLists(){
+    fetch('http://localhost:3000/lists').then(res => res.json()).then(json => {
+      json.forEach(list => {
+        displayOptions(list)
+        displayTasks(list)
+        taskForm.style.display = ""
+      })
+    })
+  }
+
+  function createListAPI(tempList){
+    fetch('http://localhost:3000/lists', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(tempList)
+    }).then(resp => resp.json()).then(list => {
+      displayOptions(list)
+      displayTasks(list)
+      taskForm.style.display = ""
+    })
+  }
+
+  function deleteListAPI(listId){
+    const id = parseInt(listId.split("-")[listId.split("-").length-1])
+    fetch(`http://localhost:3000/lists/${id}`, {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(resp => resp.json()).then(list => {
+      listSelect.querySelector(`option#${listId}`).remove()
+      listSection.querySelector(`div#${listId}`).remove()
+      if (listSection.children.length === 0) {
+        taskForm.style.display = "none"
+      }
+    })
+  }
+
+  displayAllLists();
+
   newListButton.addEventListener('click', function(e){
     e.preventDefault()
     if (newList.value){
-      const list = new List(newList.value);
-      const option = document.createElement('option');
-      option.value = newList.value;
-      option.innerText = newList.value;
-      option.id = fixId(newList.value,list);
-      option.class = list.id;
-      listSelect.appendChild(option);
-
-      const div = document.createElement('div');
-      const h2 = document.createElement('h2');
-      const button = document.createElement('button')
-      button.innerText = 'X';
-      button.type = "button";
-      button.id = fixId(newList.value, list);
-      div.id = fixId(newList.value, list);
-      h2.appendChild(button);
-      h2.innerHTML += newList.value;
-      div.appendChild(h2);
-      listSection.appendChild(div);
-
+      const tempList = {title: newList.value};
+      createListAPI(tempList)
       newList.value = "";
-      taskForm.style.display = ""
     }
   })
 
   document.body.addEventListener('click', function(e){
     e.preventDefault()
     if (e.target.type === 'button'){
-      const optionToDelete = document.querySelector(`select#parent-list option#${e.target.id}`)
-      optionToDelete.remove()
-      e.target.parentElement.parentElement.remove()
+      deleteListAPI(e.target.id)
     }
   })
 
-  newTaskButton.addEventListener('click', function(e){
-    e.preventDefault();
-    if (listSelect.value && taskDescription.value){
-      const listId = listSelect.selectedOptions[0].class
-      const list = List.findList(listId)
-      if (priorityLevel.value) {
-        new Task(taskDescription.value, list, priorityLevel.value)
-        // task.priority = priorityLevel.value
-      }else {
-        new Task(taskDescription.value, list)
-        // task.priority = "low"
-      }
-      const listDivUl = document.querySelector(`section#lists div#${fixId(list.title, list)} ul`);
-      // console.log(listDiv)
-      // debugger
-      const task = store.tasks[store.tasks.length -1]
+  function creteTaskAPI(id, listId){
+    const tempTask = {description: taskDescription.value, priority: priorityLevel.value || "low", listId: id}
+
+    fetch('http://localhost:3000/tasks', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(tempTask)
+    }).then(res => res.json()).then(task => {
+      const listDivUl = listSection.querySelector(`div#${listId} ul`);
       if (listDivUl) {
         const li = document.createElement('li');
-        li.id = fixId(task.description, task)
+        li.id = createElementId(task.description, task)
         li.innerHTML = `Task: ${task.description}` + '<br>' + `Priority: ${task.priority}`
         listDivUl.appendChild(li)
       }else {
-        const listDiv = document.querySelector(`section#lists div#${fixId(list.title, list)}`);
+        const listDiv = listSection.querySelector(`div#${listId}`);
         const ul = document.createElement('ul')
-        ul.id = fixId(list.title, list)
+        ul.id = listId
         listDiv.appendChild(ul)
         const li = document.createElement('li');
-        li.id = fixId(task.description, task)
+        li.id = createElementId(task.description, task)
         li.innerHTML = `Task: ${task.description}` + '<br>' + `Priority: ${task.priority}`
         ul.appendChild(li)
       }
       taskDescription.value = ""
       priorityLevel.value = ""
+    })
+  }
+
+  newTaskButton.addEventListener('click', function(e){
+    e.preventDefault();
+    if (listSelect.value && taskDescription.value){
+      const id = listSelect.selectedOptions[0].class
+      const listId = listSelect.selectedOptions[0].id
+      creteTaskAPI(id, listId)
     }
   })
-
 });
