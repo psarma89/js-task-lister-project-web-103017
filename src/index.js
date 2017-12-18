@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     listSelect.appendChild(option);
   }
 
-  function displayTasks(list){
+  function displayLists(list){
     const div = document.createElement('div');
     const h2 = document.createElement('h2');
     const button = document.createElement('button')
@@ -45,11 +45,32 @@ document.addEventListener('DOMContentLoaded', () => {
     listSection.appendChild(div);
   }
 
+  function displayTask(task, listId){
+    const listDivUl = listSection.querySelector(`div#${listId} ul`);
+    if (listDivUl) {
+      const li = document.createElement('li');
+      li.id = createElementId(task.description, task)
+      li.innerHTML = `Task: ${task.description}` + '<br>' + `Priority: ${task.priority}`
+      listDivUl.appendChild(li)
+    }else {
+      const listDiv = listSection.querySelector(`div#${listId}`);
+      const ul = document.createElement('ul')
+      ul.id = listId
+      listDiv.appendChild(ul)
+      const li = document.createElement('li');
+      li.id = createElementId(task.description, task)
+      li.innerHTML = `Task: ${task.description}` + '<br>' + `Priority: ${task.priority}`
+      ul.appendChild(li)
+    }
+  }
+
   function displayAllLists(){
     fetch('http://localhost:3000/lists').then(res => res.json()).then(json => {
       json.forEach(list => {
         displayOptions(list)
-        displayTasks(list)
+        displayLists(list)
+        const listId = createElementId(list.title,list)
+        list.tasks.forEach(task => displayTask(task, listId))
         taskForm.style.display = ""
       })
     })
@@ -64,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
       body: JSON.stringify(tempList)
     }).then(resp => resp.json()).then(list => {
       displayOptions(list)
-      displayTasks(list)
+      displayLists(list)
       taskForm.style.display = ""
     })
   }
@@ -85,12 +106,28 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 
+  function creteTaskAPI(id, listId){
+    const tempTask = {task: {description: taskDescription.value, priority: priorityLevel.value || "low", list_id: id}}
+
+    fetch('http://localhost:3000/tasks', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(tempTask)
+    }).then(res => res.json()).then(task => {
+      displayTask(task, listId)
+      taskDescription.value = ""
+      priorityLevel.value = ""
+    })
+  }
+
   displayAllLists();
 
   newListButton.addEventListener('click', function(e){
     e.preventDefault()
     if (newList.value){
-      const tempList = {title: newList.value};
+      const tempList = {list: {title: newList.value}};
       createListAPI(tempList)
       newList.value = "";
     }
@@ -102,37 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
       deleteListAPI(e.target.id)
     }
   })
-
-  function creteTaskAPI(id, listId){
-    const tempTask = {description: taskDescription.value, priority: priorityLevel.value || "low", listId: id}
-
-    fetch('http://localhost:3000/tasks', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(tempTask)
-    }).then(res => res.json()).then(task => {
-      const listDivUl = listSection.querySelector(`div#${listId} ul`);
-      if (listDivUl) {
-        const li = document.createElement('li');
-        li.id = createElementId(task.description, task)
-        li.innerHTML = `Task: ${task.description}` + '<br>' + `Priority: ${task.priority}`
-        listDivUl.appendChild(li)
-      }else {
-        const listDiv = listSection.querySelector(`div#${listId}`);
-        const ul = document.createElement('ul')
-        ul.id = listId
-        listDiv.appendChild(ul)
-        const li = document.createElement('li');
-        li.id = createElementId(task.description, task)
-        li.innerHTML = `Task: ${task.description}` + '<br>' + `Priority: ${task.priority}`
-        ul.appendChild(li)
-      }
-      taskDescription.value = ""
-      priorityLevel.value = ""
-    })
-  }
 
   newTaskButton.addEventListener('click', function(e){
     e.preventDefault();
