@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function displayAllLists(){
-    fetch('http://localhost:3000/lists').then(res => res.json()).then(json => {
+    fetch('http://localhost:3000/api/v1/lists').then(res => res.json()).then(json => {
       json.forEach(list => {
         displayOptions(list)
         displayList(list)
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function createListAPI(tempList){
-    fetch('http://localhost:3000/lists', {
+    fetch('http://localhost:3000/api/v1/lists', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function deleteListAPI(listId){
     const id = parseInt(listId.split("-")[listId.split("-").length-1])
-    fetch(`http://localhost:3000/lists/${id}`, {
+    fetch(`http://localhost:3000/api/v1/lists/${id}`, {
       method: 'delete',
       headers: {
         'Content-Type': 'application/json'
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function creteTaskAPI(id, listId){
     const tempTask = {task: {description: taskDescription.value, priority: priorityLevel.value || "low", list_id: id}}
 
-    fetch('http://localhost:3000/tasks', {
+    fetch('http://localhost:3000/api/v1/tasks', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function deleteTaskAPI(taskId){
     const id = parseInt(taskId.split("-")[taskId.split("-").length-1])
-    fetch(`http://localhost:3000/tasks/${id}`, {
+    fetch(`http://localhost:3000/api/v1/tasks/${id}`, {
       method: 'delete',
       headers: {
         'Content-Type': 'application/json'
