@@ -17,7 +17,7 @@ class ListsController < ApplicationController
   def destroy
     @list = List.find(params[:id])
     if @list
-      Task.where(list_id: @list.id).destroy_all
+      # Task.where(list_id: @list.id).destroy_all
       @list.destroy
       render json: {message: "List was succesfully deleted"}
     else

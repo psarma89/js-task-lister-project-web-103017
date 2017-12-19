@@ -30,12 +30,13 @@ document.addEventListener('DOMContentLoaded', () => {
     listSelect.appendChild(option);
   }
 
-  function displayLists(list){
+  function displayList(list){
     const div = document.createElement('div');
     const h2 = document.createElement('h2');
     const button = document.createElement('button')
     button.innerText = 'X';
     button.type = "button";
+    button.dataset.model = "list"
     button.id = createElementId(list.title, list);
     button.class = list.id;
     div.id = createElementId(list.title, list);
@@ -50,7 +51,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (listDivUl) {
       const li = document.createElement('li');
       li.id = createElementId(task.description, task)
-      li.innerHTML = `Task: ${task.description}` + '<br>' + `Priority: ${task.priority}`
+
+      const button = document.createElement('button')
+      button.innerText = 'X';
+      button.type = "button";
+      button.dataset.model = "task"
+      button.id = createElementId(task.description, task);
+      button.class = task.id;
+
+      li.appendChild(button)
+
+      li.innerHTML += `Task: ${task.description}` + '<br>' + `Priority: ${task.priority}`
+
       listDivUl.appendChild(li)
     }else {
       const listDiv = listSection.querySelector(`div#${listId}`);
@@ -59,7 +71,17 @@ document.addEventListener('DOMContentLoaded', () => {
       listDiv.appendChild(ul)
       const li = document.createElement('li');
       li.id = createElementId(task.description, task)
-      li.innerHTML = `Task: ${task.description}` + '<br>' + `Priority: ${task.priority}`
+
+      const button = document.createElement('button')
+      button.innerText = 'X';
+      button.type = "button";
+      button.dataset.model = "task"
+      button.id = createElementId(task.description, task);
+      button.class = task.id;
+
+      li.appendChild(button)
+      li.innerHTML += `Task: ${task.description}` + '<br>' + `Priority: ${task.priority}`
+
       ul.appendChild(li)
     }
   }
@@ -68,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('http://localhost:3000/lists').then(res => res.json()).then(json => {
       json.forEach(list => {
         displayOptions(list)
-        displayLists(list)
+        displayList(list)
         const listId = createElementId(list.title,list)
         list.tasks.forEach(task => displayTask(task, listId))
         taskForm.style.display = ""
@@ -85,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
       body: JSON.stringify(tempList)
     }).then(resp => resp.json()).then(list => {
       displayOptions(list)
-      displayLists(list)
+      displayList(list)
       taskForm.style.display = ""
     })
   }
@@ -122,6 +144,18 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 
+  function deleteTaskAPI(taskId){
+    const id = parseInt(taskId.split("-")[taskId.split("-").length-1])
+    fetch(`http://localhost:3000/tasks/${id}`, {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(resp => resp.json()).then(task => {
+      document.querySelector(`li#${taskId}`).remove()
+    })
+  }
+
   displayAllLists();
 
   newListButton.addEventListener('click', function(e){
@@ -135,8 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.body.addEventListener('click', function(e){
     e.preventDefault()
-    if (e.target.type === 'button'){
+    if (e.target.type === 'button' && e.target.dataset.model === 'list'){
       deleteListAPI(e.target.id)
+    }else if (e.target.type === 'button' && e.target.dataset.model === 'task') {
+      deleteTaskAPI(e.target.id)
     }
   })
 
