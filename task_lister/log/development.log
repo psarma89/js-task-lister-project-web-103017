@@ -1,0 +1,1934 @@
+  [1m[35m (0.1ms)[0m  [1m[35mDROP DATABASE IF EXISTS "task_lister_development"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "task_lister_test"[0m
+  [1m[35m (378.8ms)[0m  [1m[35mCREATE DATABASE "task_lister_development" ENCODING = 'unicode'[0m
+  [1m[35m (241.7ms)[0m  [1m[35mCREATE DATABASE "task_lister_test" ENCODING = 'unicode'[0m
+  [1m[35m (28.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (5.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7396244229637247985)[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateLists (20171218183012)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE TABLE "lists" ("id" bigserial primary key, "title" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (1.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171218183012"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTasks (20171218183623)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE TABLE "tasks" ("id" bigserial primary key, "description" character varying, "priority" character varying, "list_id" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171218183623"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.7ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-12-18 18:42:17.975167"], ["updated_at", "2017-12-18 18:42:17.975167"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(7396244229637247985)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.7ms)[0m  [1m[32mINSERT INTO "lists" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "My List 1"], ["created_at", "2017-12-18 18:59:41.773617"], ["updated_at", "2017-12-18 18:59:41.773617"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/lists.json" for 127.0.0.1 at 2017-12-18 14:00:22 -0500
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ListsController#index as JSON
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 1, title: "My List 1", created_at: "2017-12-18 18:59:41", updated_at: "2017-12-18 18:59:41">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (0.72ms)
+Completed 200 OK in 26ms (Views: 14.3ms | ActiveRecord: 5.4ms)
+
+
+Started GET "/favicon.ico" for 127.0.0.1 at 2017-12-18 14:00:22 -0500
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 14:08:30 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 1, title: "My List 1", created_at: "2017-12-18 18:59:41", updated_at: "2017-12-18 18:59:41">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (1.06ms)
+Completed 200 OK in 46ms (Views: 27.1ms | ActiveRecord: 10.1ms)
+
+
+Started GET "/lists.json" for 127.0.0.1 at 2017-12-18 14:12:07 -0500
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ListsController#index as JSON
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 1, title: "My List 1", created_at: "2017-12-18 18:59:41", updated_at: "2017-12-18 18:59:41">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (0.42ms)
+Completed 200 OK in 29ms (Views: 16.7ms | ActiveRecord: 5.2ms)
+
+
+Started GET "/lists.json" for 127.0.0.1 at 2017-12-18 14:21:16 -0500
+Processing by ListsController#index as JSON
+  [1m[36mList Load (0.5ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 1, title: "My List 1", created_at: "2017-12-18 18:59:41", updated_at: "2017-12-18 18:59:41">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (0.39ms)
+Completed 200 OK in 18ms (Views: 13.9ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/lists" for 127.0.0.1 at 2017-12-18 14:21:55 -0500
+Processing by ListsController#create as */*
+  Parameters: {"title"=>"My List 1", "list"=>{"title"=>"My List 1"}}
+Completed 400 Bad Request in 1ms (ActiveRecord: 0.0ms)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: lists):
+  
+app/controllers/lists_controller.rb:30:in `list_params'
+app/controllers/lists_controller.rb:9:in `create'
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 14:26:37 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 1, title: "My List 1", created_at: "2017-12-18 18:59:41", updated_at: "2017-12-18 18:59:41">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (0.28ms)
+Completed 200 OK in 22ms (Views: 14.4ms | ActiveRecord: 0.4ms)
+
+
+Started POST "/lists" for 127.0.0.1 at 2017-12-18 14:26:49 -0500
+Processing by ListsController#create as */*
+  Parameters: {"list"=>{"title"=>"My List 2"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[32mINSERT INTO "lists" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "My List 2"], ["created_at", "2017-12-18 19:26:49.831934"], ["updated_at", "2017-12-18 19:26:49.831934"]]
+  [1m[35m (8.0ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with List (0.32ms)
+Completed 200 OK in 19ms (Views: 3.9ms | ActiveRecord: 10.1ms)
+
+
+Started DELETE "/lists/2" for 127.0.0.1 at 2017-12-18 14:28:18 -0500
+Processing by ListsController#destroy as */*
+  Parameters: {"id"=>"2", "list"=>{}}
+  [1m[36mList Load (0.9ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[31mDELETE FROM "lists" WHERE "lists"."id" = $1[0m  [["id", 2]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.13ms)
+Completed 200 OK in 18ms (Views: 1.2ms | ActiveRecord: 2.6ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 14:31:44 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (1.0ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 1, title: "My List 1", created_at: "2017-12-18 18:59:41", updated_at: "2017-12-18 18:59:41">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (0.35ms)
+Completed 200 OK in 23ms (Views: 16.0ms | ActiveRecord: 1.0ms)
+
+
+Started POST "/lists" for 127.0.0.1 at 2017-12-18 14:31:55 -0500
+Processing by ListsController#create as */*
+  Parameters: {"list"=>{"title"=>"My List 2"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "lists" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "My List 2"], ["created_at", "2017-12-18 19:31:55.568145"], ["updated_at", "2017-12-18 19:31:55.568145"]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with List (0.27ms)
+Completed 200 OK in 7ms (Views: 0.8ms | ActiveRecord: 2.8ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 14:32:02 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"New Task 1", "priority"=>"low", "listId"=>1}}
+Completed 500 Internal Server Error in 91ms (ActiveRecord: 0.0ms)
+
+
+  
+NameError (undefined local variable or method `task_params' for #<TasksController:0x007f92289f9d88>
+Did you mean?  task_parameters):
+  
+app/controllers/tasks_controller.rb:9:in `create'
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 14:32:54 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 1, title: "My List 1", created_at: "2017-12-18 18:59:41", updated_at: "2017-12-18 18:59:41">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (0.35ms)
+Completed 200 OK in 22ms (Views: 9.8ms | ActiveRecord: 6.0ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 14:33:02 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"New Task 1", "priority"=>"low", "listId"=>1}}
+Unpermitted parameter: :listId
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.07ms)
+Completed 422 Unprocessable Entity in 39ms (Views: 1.4ms | ActiveRecord: 8.2ms)
+
+
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (3.3ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "list_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "My Task 1"], ["priority", "low"], ["list_id", "1"], ["created_at", "2017-12-18 19:41:09.870233"], ["updated_at", "2017-12-18 19:41:09.870233"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 14:41:43 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 1, title: "My List 1", created_at: "2017-12-18 18:59:41", updated_at: "2017-12-18 18:59:41">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (0.33ms)
+Completed 200 OK in 25ms (Views: 14.3ms | ActiveRecord: 6.6ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 14:42:45 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (0.5ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 1, title: "My List 1", created_at: "2017-12-18 18:59:41", updated_at: "2017-12-18 18:59:41">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (0.44ms)
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 14:44:09 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"My Task 2", "priority"=>"low", "list_id"=>1}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "list_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "My Task 2"], ["priority", "low"], ["list_id", "1"], ["created_at", "2017-12-18 19:44:09.962274"], ["updated_at", "2017-12-18 19:44:09.962274"]]
+  [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Task (0.46ms)
+Completed 200 OK in 52ms (Views: 11.4ms | ActiveRecord: 13.1ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 14:44:32 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"Somewhere", "priority"=>"High", "list_id"=>3}}
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.5ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (1.9ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "list_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "Somewhere"], ["priority", "High"], ["list_id", "3"], ["created_at", "2017-12-18 19:44:32.245850"], ["updated_at", "2017-12-18 19:44:32.245850"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Task (0.39ms)
+Completed 200 OK in 13ms (Views: 1.0ms | ActiveRecord: 4.2ms)
+
+
+Started DELETE "/lists/1" for 127.0.0.1 at 2017-12-18 14:44:40 -0500
+Processing by ListsController#destroy as */*
+  Parameters: {"id"=>"1", "list"=>{}}
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[31mDELETE FROM "lists" WHERE "lists"."id" = $1[0m  [["id", 1]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.17ms)
+Completed 200 OK in 9ms (Views: 2.3ms | ActiveRecord: 2.8ms)
+
+
+  [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" LIMIT $1[0m  [["LIMIT", 11]]
+Started DELETE "/lists/3" for 127.0.0.1 at 2017-12-18 14:46:10 -0500
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ListsController#destroy as */*
+  Parameters: {"id"=>"3", "list"=>{}}
+  [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "lists" WHERE "lists"."id" = $1[0m  [["id", 3]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.14ms)
+Completed 200 OK in 22ms (Views: 4.6ms | ActiveRecord: 9.0ms)
+
+
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" LIMIT $1[0m  [["LIMIT", 11]]
+Started GET "/lists.json" for 127.0.0.1 at 2017-12-18 14:51:13 -0500
+Processing by ListsController#index as JSON
+  [1m[36mList Load (0.5ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (0.13ms)
+Completed 200 OK in 43ms (Views: 29.4ms | ActiveRecord: 13.3ms)
+
+
+  [1m[36mTask Load (1.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 1]]
+  [1m[35m (5.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 2]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 3]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTask Load (0.8ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7396244229637247985)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ChangeListIdColumn (20171218200024)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(7396244229637247985)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7396244229637247985)[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ChangeListIdColumn (20171218200024)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.1ms)[0m  [1m[35mALTER TABLE "tasks" ALTER COLUMN "list_id" TYPE integer[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(7396244229637247985)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7396244229637247985)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ChangeListIdColumn (20171218200024)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.9ms)[0m  [1m[35mALTER TABLE "tasks" DROP "list_id"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "tasks" ADD "list_id" integer[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171218200024"]]
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(7396244229637247985)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 15:06:36 -0500
+Started POST "/lists" for 127.0.0.1 at 2017-12-18 15:06:46 -0500
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ListsController#index as */*
+  [1m[36mList Load (0.5ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (1.2ms)
+Completed 200 OK in 15ms (Views: 4.9ms | ActiveRecord: 0.5ms)
+
+
+Processing by ListsController#create as */*
+  Parameters: {"list"=>{"title"=>"New List 1"}}
+  [1m[35m (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "lists" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "New List 1"], ["created_at", "2017-12-18 20:06:46.864079"], ["updated_at", "2017-12-18 20:06:46.864079"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with List (0.42ms)
+Completed 200 OK in 24ms (Views: 7.0ms | ActiveRecord: 3.0ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 15:07:01 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"New Task 1", "priority"=>"High", "list_id"=>4}}
+  [1m[35m (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (1.3ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "New Task 1"], ["priority", "High"], ["created_at", "2017-12-18 20:07:01.254911"], ["updated_at", "2017-12-18 20:07:01.254911"], ["list_id", 4]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Task (0.32ms)
+Completed 200 OK in 83ms (Views: 2.2ms | ActiveRecord: 22.5ms)
+
+
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" LIMIT $1[0m  [["LIMIT", 11]]
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 15:08:14 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"new task", "priority"=>"low", "list_id"=>4}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (1.7ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "new task"], ["priority", "low"], ["created_at", "2017-12-18 20:08:14.908775"], ["updated_at", "2017-12-18 20:08:14.908775"], ["list_id", 4]]
+  [1m[35m (1.4ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Task (0.28ms)
+Completed 200 OK in 11ms (Views: 1.1ms | ActiveRecord: 3.6ms)
+
+
+Started GET "/lists.json" for 127.0.0.1 at 2017-12-18 15:10:01 -0500
+Processing by ListsController#index as JSON
+  [1m[36mList Load (0.5ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 4, title: "New List 1", created_at: "2017-12-18 20:06:46", updated_at: "2017-12-18 20:06:46">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (0.24ms)
+Completed 200 OK in 32ms (Views: 25.5ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 15:10:11 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (2.5ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 4, title: "New List 1", created_at: "2017-12-18 20:06:46", updated_at: "2017-12-18 20:06:46">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (0.49ms)
+Completed 200 OK in 9ms (Views: 6.0ms | ActiveRecord: 2.5ms)
+
+
+Started POST "/lists" for 127.0.0.1 at 2017-12-18 15:10:39 -0500
+Processing by ListsController#create as */*
+  Parameters: {"list"=>{"title"=>"New List 2"}}
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "lists" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "New List 2"], ["created_at", "2017-12-18 20:10:39.025848"], ["updated_at", "2017-12-18 20:10:39.025848"]]
+  [1m[35m (3.5ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with List (0.28ms)
+Completed 200 OK in 12ms (Views: 0.9ms | ActiveRecord: 4.6ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 15:11:31 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"New Task 1", "priority"=>"low", "list_id"=>5}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (1.8ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[35mSQL (5.0ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "New Task 1"], ["priority", "low"], ["created_at", "2017-12-18 20:11:31.922064"], ["updated_at", "2017-12-18 20:11:31.922064"], ["list_id", 5]]
+  [1m[35m (1.4ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Task (0.43ms)
+Completed 200 OK in 45ms (Views: 9.3ms | ActiveRecord: 16.9ms)
+
+
+Started DELETE "/lists/4" for 127.0.0.1 at 2017-12-18 15:12:57 -0500
+Processing by ListsController#destroy as */*
+  Parameters: {"id"=>"4", "list"=>{}}
+  [1m[36mList Load (0.5ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 0.5ms)
+
+
+  
+ArgumentError (wrong number of arguments (given 1, expected 0)):
+  
+app/controllers/lists_controller.rb:20:in `destroy'
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 15:16:03 -0500
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ListsController#index as */*
+  [1m[36mList Load (0.5ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 4, title: "New List 1", created_at: "2017-12-18 20:06:46", updated_at: "2017-12-18 20:06:46">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (0.49ms)
+Completed 200 OK in 25ms (Views: 13.3ms | ActiveRecord: 5.8ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 15:26:44 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (1.8ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 4, title: "New List 1", created_at: "2017-12-18 20:06:46", updated_at: "2017-12-18 20:06:46">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (0.7ms)
+Completed 200 OK in 28ms (Views: 15.7ms | ActiveRecord: 12.2ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 15:29:25 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (0.9ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 4, title: "New List 1", created_at: "2017-12-18 20:06:46", updated_at: "2017-12-18 20:06:46">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (0.6ms)
+Completed 200 OK in 7ms (Views: 5.5ms | ActiveRecord: 0.9ms)
+
+
+Started DELETE "/lists/4" for 127.0.0.1 at 2017-12-18 15:29:30 -0500
+Processing by ListsController#destroy as */*
+  Parameters: {"id"=>"4", "list"=>{}}
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 0.6ms)
+
+
+  
+ArgumentError (wrong number of arguments (given 1, expected 0)):
+  
+app/controllers/lists_controller.rb:20:in `destroy'
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 15:34:06 -0500
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 15:34:16 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 4, title: "New List 1", created_at: "2017-12-18 20:06:46", updated_at: "2017-12-18 20:06:46">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (0.6ms)
+Completed 200 OK in 19ms (Views: 14.0ms | ActiveRecord: 0.4ms)
+
+
+Processing by ListsController#index as */*
+  [1m[36mList Load (0.2ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 4, title: "New List 1", created_at: "2017-12-18 20:06:46", updated_at: "2017-12-18 20:06:46">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (0.49ms)
+Completed 200 OK in 17ms (Views: 12.5ms | ActiveRecord: 0.2ms)
+
+
+Started DELETE "/lists/5" for 127.0.0.1 at 2017-12-18 15:34:28 -0500
+Processing by ListsController#destroy as */*
+  Parameters: {"id"=>"5", "list"=>{}}
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 5]]
+  [1m[35m (1.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 6]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[31mDELETE FROM "lists" WHERE "lists"."id" = $1[0m  [["id", 5]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.1ms)
+Completed 200 OK in 37ms (Views: 3.3ms | ActiveRecord: 14.5ms)
+
+
+Started DELETE "/lists/4" for 127.0.0.1 at 2017-12-18 15:34:36 -0500
+Processing by ListsController#destroy as */*
+  Parameters: {"id"=>"4", "list"=>{}}
+  [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mTask Load (1.0ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 4]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 4]]
+  [1m[35m (6.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 5]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "lists" WHERE "lists"."id" = $1[0m  [["id", 4]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.07ms)
+Completed 200 OK in 21ms (Views: 0.7ms | ActiveRecord: 12.4ms)
+
+
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" LIMIT $1[0m  [["LIMIT", 11]]
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 15:37:46 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (1.1ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (0.16ms)
+Completed 200 OK in 13ms (Views: 11.5ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 15:43:30 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (0.8ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (0.17ms)
+Completed 200 OK in 4ms (Views: 2.5ms | ActiveRecord: 0.8ms)
+
+
+  [1m[36mTask Load (1.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" LIMIT $1[0m  [["LIMIT", 11]]
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 15:53:57 -0500
+  
+NoMethodError (undefined method `GET' for #<ActionDispatch::Routing::Mapper:0x007fab98f77a10>
+Did you mean?  get
+               gets
+               gem):
+  
+config/routes.rb:4:in `block in <top (required)>'
+config/routes.rb:1:in `<top (required)>'
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 15:58:22 -0500
+Processing by ListsController#index as HTML
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (0.08ms)
+Completed 200 OK in 9ms (Views: 2.0ms | ActiveRecord: 3.0ms)
+
+
+Started POST "/lists" for 127.0.0.1 at 2017-12-18 15:58:33 -0500
+Processing by ListsController#create as */*
+  Parameters: {"list"=>{"title"=>"New List 1"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "lists" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "New List 1"], ["created_at", "2017-12-18 20:58:33.767653"], ["updated_at", "2017-12-18 20:58:33.767653"]]
+  [1m[35m (1.5ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with List (0.36ms)
+Completed 200 OK in 22ms (Views: 5.7ms | ActiveRecord: 7.6ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 15:58:36 -0500
+Processing by ListsController#index as HTML
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+No serializer found for resource: #<List id: 6, title: "New List 1", created_at: "2017-12-18 20:58:33", updated_at: "2017-12-18 20:58:33">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with List::ActiveRecord_Relation (1.14ms)
+Completed 200 OK in 8ms (Views: 7.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 15:59:08 -0500
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ListsController#index as HTML
+  [1m[36mList Load (1.1ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (0.75ms)
+Completed 200 OK in 43ms (Views: 23.0ms | ActiveRecord: 8.5ms)
+
+
+Started GET "/lists.json" for 127.0.0.1 at 2017-12-18 15:59:14 -0500
+Processing by ListsController#index as JSON
+  [1m[36mList Load (1.1ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (0.5ms)
+Completed 200 OK in 20ms (Views: 8.8ms | ActiveRecord: 10.4ms)
+
+
+Started GET "/lists.json" for 127.0.0.1 at 2017-12-18 16:00:04 -0500
+Processing by ListsController#index as JSON
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 6]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (28.34ms)
+Completed 200 OK in 43ms (Views: 35.1ms | ActiveRecord: 3.1ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 16:00:32 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"New Task 1", "priority"=>"low", "list_id"=>6}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[35mSQL (1.3ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "New Task 1"], ["priority", "low"], ["created_at", "2017-12-18 21:00:32.238799"], ["updated_at", "2017-12-18 21:00:32.238799"], ["list_id", 6]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Task (0.31ms)
+Completed 200 OK in 40ms (Views: 13.1ms | ActiveRecord: 7.5ms)
+
+
+Started GET "/lists.json" for 127.0.0.1 at 2017-12-18 16:00:36 -0500
+Processing by ListsController#index as JSON
+  [1m[36mList Load (0.5ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (2.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 6]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (6.6ms)
+Completed 200 OK in 11ms (Views: 7.7ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/lists.json" for 127.0.0.1 at 2017-12-18 16:03:05 -0500
+Processing by ListsController#index as JSON
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 6]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (15.36ms)
+Completed 200 OK in 38ms (Views: 27.6ms | ActiveRecord: 2.4ms)
+
+
+Started GET "/lists.json" for 127.0.0.1 at 2017-12-18 16:03:09 -0500
+Processing by ListsController#index as JSON
+  [1m[36mList Load (0.9ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (1.5ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 6]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (5.05ms)
+Completed 200 OK in 8ms (Views: 5.4ms | ActiveRecord: 2.4ms)
+
+
+Started GET "/tasks" for 127.0.0.1 at 2017-12-18 16:08:19 -0500
+Processing by TasksController#index as HTML
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (0.5ms)
+Completed 200 OK in 5ms (Views: 4.1ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 16:08:41 -0500
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ListsController#index as HTML
+  [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 6]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (35.15ms)
+Completed 200 OK in 66ms (Views: 47.4ms | ActiveRecord: 11.5ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 16:10:28 -0500
+Processing by ListsController#index as HTML
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 6]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (18.86ms)
+Completed 200 OK in 42ms (Views: 35.5ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 16:10:57 -0500
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ListsController#index as HTML
+  [1m[36mList Load (0.5ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 6]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (40.96ms)
+Completed 200 OK in 79ms (Views: 61.4ms | ActiveRecord: 10.3ms)
+
+
+Started GET "/tasks" for 127.0.0.1 at 2017-12-18 16:11:05 -0500
+Processing by TasksController#index as HTML
+  [1m[36mTask Load (1.0ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+[active_model_serializers]   [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.82ms)
+Completed 200 OK in 25ms (Views: 13.8ms | ActiveRecord: 10.3ms)
+
+
+Started GET "/tasks" for 127.0.0.1 at 2017-12-18 16:11:49 -0500
+Processing by TasksController#index as HTML
+  [1m[36mTask Load (1.9ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+[active_model_serializers]   [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.08ms)
+Completed 200 OK in 9ms (Views: 6.0ms | ActiveRecord: 2.6ms)
+
+
+Started GET "/tasks" for 127.0.0.1 at 2017-12-18 17:26:02 -0500
+Processing by TasksController#index as HTML
+  [1m[36mTask Load (0.8ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+[active_model_serializers]   [1m[36mList Load (0.5ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (7.93ms)
+Completed 200 OK in 48ms (Views: 25.7ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/tasks/1" for 127.0.0.1 at 2017-12-18 17:26:06 -0500
+  
+AbstractController::ActionNotFound (The action 'show' could not be found for TasksController):
+  
+actionpack (5.1.4) lib/abstract_controller/base.rb:119:in `process'
+actionpack (5.1.4) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.4) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:50:in `block in serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:834:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+activerecord (5.1.4) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.4) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/lists/1" for 127.0.0.1 at 2017-12-18 17:26:48 -0500
+  
+AbstractController::ActionNotFound (The action 'show' could not be found for ListsController):
+  
+actionpack (5.1.4) lib/abstract_controller/base.rb:119:in `process'
+actionpack (5.1.4) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.4) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:50:in `block in serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:834:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+activerecord (5.1.4) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.4) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/lists/4" for 127.0.0.1 at 2017-12-18 17:26:54 -0500
+  
+AbstractController::ActionNotFound (The action 'show' could not be found for ListsController):
+  
+actionpack (5.1.4) lib/abstract_controller/base.rb:119:in `process'
+actionpack (5.1.4) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.4) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:50:in `block in serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:834:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+activerecord (5.1.4) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.4) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 17:27:06 -0500
+Processing by ListsController#index as HTML
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.7ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 6]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (7.94ms)
+Completed 200 OK in 11ms (Views: 9.5ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 17:27:48 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (1.1ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (1.0ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 6]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (3.99ms)
+Completed 200 OK in 10ms (Views: 7.9ms | ActiveRecord: 2.1ms)
+
+
+Started POST "/lists" for 127.0.0.1 at 2017-12-18 17:30:31 -0500
+Processing by ListsController#create as */*
+  Parameters: {"list"=>{"title"=>"Add New List"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.6ms)[0m  [1m[32mINSERT INTO "lists" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Add New List"], ["created_at", "2017-12-18 22:30:31.564120"], ["updated_at", "2017-12-18 22:30:31.564120"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 7]]
+[active_model_serializers] Rendered ListSerializer with ActiveModelSerializers::Adapter::Attributes (4.44ms)
+Completed 200 OK in 14ms (Views: 5.0ms | ActiveRecord: 2.7ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 17:33:41 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"New Task", "priority"=>"Bleh", "list_id"=>6}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.8ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "New Task"], ["priority", "Bleh"], ["created_at", "2017-12-18 22:33:41.136315"], ["updated_at", "2017-12-18 22:33:41.136315"], ["list_id", 6]]
+  [1m[35m (1.1ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered TaskSerializer with ActiveModelSerializers::Adapter::Attributes (1.74ms)
+Completed 200 OK in 15ms (Views: 2.3ms | ActiveRecord: 3.9ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 17:43:55 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (6.3ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (1.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 6]]
+[active_model_serializers]   [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 7]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (8.28ms)
+Completed 200 OK in 19ms (Views: 10.5ms | ActiveRecord: 8.1ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 17:44:06 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"new List", "priority"=>"High", "list_id"=>6}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.5ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "new List"], ["priority", "High"], ["created_at", "2017-12-18 22:44:06.229058"], ["updated_at", "2017-12-18 22:44:06.229058"], ["list_id", 6]]
+  [1m[35m (5.6ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered TaskSerializer with ActiveModelSerializers::Adapter::Attributes (0.5ms)
+Completed 200 OK in 12ms (Views: 1.1ms | ActiveRecord: 6.9ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 17:45:02 -0500
+Processing by ListsController#index as HTML
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 6]]
+[active_model_serializers]   [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 7]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (10.2ms)
+Completed 200 OK in 13ms (Views: 11.5ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 17:50:27 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (1.5ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (2.1ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 6]]
+[active_model_serializers]   [1m[36mTask Load (0.8ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 7]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (10.44ms)
+Completed 200 OK in 16ms (Views: 11.3ms | ActiveRecord: 4.4ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 17:50:40 -0500
+Processing by ListsController#index as HTML
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 6]]
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 7]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (7.55ms)
+Completed 200 OK in 10ms (Views: 8.8ms | ActiveRecord: 0.9ms)
+
+
+Started DELETE "/lists/6" for 127.0.0.1 at 2017-12-18 17:51:16 -0500
+Processing by ListsController#destroy as */*
+  Parameters: {"id"=>"6", "list"=>{}}
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 6]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 7]]
+  [1m[35m (5.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 8]]
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 9]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[31mDELETE FROM "lists" WHERE "lists"."id" = $1[0m  [["id", 6]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.13ms)
+Completed 200 OK in 25ms (Views: 5.4ms | ActiveRecord: 11.1ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 17:51:19 -0500
+Processing by ListsController#index as HTML
+  [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.7ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 7]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (3.58ms)
+Completed 200 OK in 7ms (Views: 4.9ms | ActiveRecord: 1.4ms)
+
+
+Started DELETE "/lists/7" for 127.0.0.1 at 2017-12-18 17:51:25 -0500
+Processing by ListsController#destroy as */*
+  Parameters: {"id"=>"7", "list"=>{}}
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 7]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "lists" WHERE "lists"."id" = $1[0m  [["id", 7]]
+  [1m[35m (5.3ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.12ms)
+Completed 200 OK in 11ms (Views: 0.6ms | ActiveRecord: 6.7ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 17:51:28 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (2.0ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (0.14ms)
+Completed 200 OK in 9ms (Views: 7.0ms | ActiveRecord: 2.0ms)
+
+
+Started POST "/lists" for 127.0.0.1 at 2017-12-18 17:51:34 -0500
+Processing by ListsController#create as */*
+  Parameters: {"list"=>{"title"=>"New List"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "lists" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "New List"], ["created_at", "2017-12-18 22:51:34.736616"], ["updated_at", "2017-12-18 22:51:34.736616"]]
+  [1m[35m (5.3ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 8]]
+[active_model_serializers] Rendered ListSerializer with ActiveModelSerializers::Adapter::Attributes (2.47ms)
+Completed 200 OK in 13ms (Views: 2.8ms | ActiveRecord: 6.6ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 17:51:43 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"Do something", "priority"=>"low", "list_id"=>8}}
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "Do something"], ["priority", "low"], ["created_at", "2017-12-18 22:51:43.316563"], ["updated_at", "2017-12-18 22:51:43.316563"], ["list_id", 8]]
+  [1m[35m (5.3ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered TaskSerializer with ActiveModelSerializers::Adapter::Attributes (0.67ms)
+Completed 200 OK in 13ms (Views: 1.4ms | ActiveRecord: 6.7ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 17:51:56 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"Do something else", "priority"=>"High", "list_id"=>8}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "Do something else"], ["priority", "High"], ["created_at", "2017-12-18 22:51:56.020865"], ["updated_at", "2017-12-18 22:51:56.020865"], ["list_id", 8]]
+  [1m[35m (5.7ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered TaskSerializer with ActiveModelSerializers::Adapter::Attributes (0.47ms)
+Completed 200 OK in 13ms (Views: 1.1ms | ActiveRecord: 6.8ms)
+
+
+Started POST "/lists" for 127.0.0.1 at 2017-12-18 17:52:07 -0500
+Processing by ListsController#create as */*
+  Parameters: {"list"=>{"title"=>"Another tList"}}
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "lists" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Another tList"], ["created_at", "2017-12-18 22:52:07.622749"], ["updated_at", "2017-12-18 22:52:07.622749"]]
+  [1m[35m (5.3ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 9]]
+[active_model_serializers] Rendered ListSerializer with ActiveModelSerializers::Adapter::Attributes (3.54ms)
+Completed 200 OK in 14ms (Views: 3.6ms | ActiveRecord: 6.8ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 17:52:18 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"Something", "priority"=>"High", "list_id"=>9}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "Something"], ["priority", "High"], ["created_at", "2017-12-18 22:52:18.466701"], ["updated_at", "2017-12-18 22:52:18.466701"], ["list_id", 9]]
+  [1m[35m (5.3ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered TaskSerializer with ActiveModelSerializers::Adapter::Attributes (0.56ms)
+Completed 200 OK in 13ms (Views: 1.2ms | ActiveRecord: 6.3ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 17:52:28 -0500
+Processing by ListsController#index as HTML
+  [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.8ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 8]]
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 9]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (8.2ms)
+Completed 200 OK in 15ms (Views: 12.5ms | ActiveRecord: 1.8ms)
+
+
+Started DELETE "/lists/9" for 127.0.0.1 at 2017-12-18 17:52:37 -0500
+Processing by ListsController#destroy as */*
+  Parameters: {"id"=>"9", "list"=>{}}
+  [1m[36mList Load (0.2ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 9]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 12]]
+  [1m[35m (5.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[31mDELETE FROM "lists" WHERE "lists"."id" = $1[0m  [["id", 9]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.08ms)
+Completed 200 OK in 13ms (Views: 0.6ms | ActiveRecord: 7.9ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 17:54:50 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (2.8ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (6.95ms)
+Completed 200 OK in 10ms (Views: 6.3ms | ActiveRecord: 3.1ms)
+
+
+Started POST "/lists" for 127.0.0.1 at 2017-12-18 17:55:02 -0500
+Processing by ListsController#create as */*
+  Parameters: {"list"=>{"title"=>"Something Else"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "lists" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Something Else"], ["created_at", "2017-12-18 22:55:02.865695"], ["updated_at", "2017-12-18 22:55:02.865695"]]
+  [1m[35m (5.4ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 10]]
+[active_model_serializers] Rendered ListSerializer with ActiveModelSerializers::Adapter::Attributes (2.87ms)
+Completed 200 OK in 14ms (Views: 3.1ms | ActiveRecord: 6.5ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 17:55:17 -0500
+Processing by ListsController#index as HTML
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 8]]
+[active_model_serializers]   [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 10]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (7.31ms)
+Completed 200 OK in 11ms (Views: 9.4ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 18:46:34 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (1.3ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.8ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 8]]
+[active_model_serializers]   [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 10]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (7.76ms)
+Completed 200 OK in 16ms (Views: 13.5ms | ActiveRecord: 2.4ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 18:52:36 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (1.9ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 8]]
+[active_model_serializers]   [1m[36mTask Load (1.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 10]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (9.15ms)
+Completed 200 OK in 17ms (Views: 12.9ms | ActiveRecord: 4.0ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 18:56:32 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (2.3ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.9ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 8]]
+[active_model_serializers]   [1m[36mTask Load (1.7ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 10]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (15.71ms)
+Completed 200 OK in 22ms (Views: 16.9ms | ActiveRecord: 4.9ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 18:59:37 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (0.8ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (4.0ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 8]]
+[active_model_serializers]   [1m[36mTask Load (1.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 10]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (12.07ms)
+Completed 200 OK in 16ms (Views: 9.6ms | ActiveRecord: 6.1ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 18:59:59 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (2.4ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (2.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 8]]
+[active_model_serializers]   [1m[36mTask Load (0.8ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 10]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (12.37ms)
+Completed 200 OK in 20ms (Views: 14.5ms | ActiveRecord: 5.3ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 19:00:14 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (1.6ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (1.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 8]]
+[active_model_serializers]   [1m[36mTask Load (0.7ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 10]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (9.57ms)
+Completed 200 OK in 15ms (Views: 11.6ms | ActiveRecord: 3.5ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 19:02:02 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (1.5ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.9ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 8]]
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 10]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (8.81ms)
+Completed 200 OK in 15ms (Views: 11.7ms | ActiveRecord: 2.7ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 19:03:36 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (1.5ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (1.1ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 8]]
+[active_model_serializers]   [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 10]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (7.99ms)
+Completed 200 OK in 16ms (Views: 12.7ms | ActiveRecord: 3.2ms)
+
+
+Started DELETE "/lists/10" for 127.0.0.1 at 2017-12-18 19:03:39 -0500
+Processing by ListsController#destroy as */*
+  Parameters: {"id"=>"10", "list"=>{}}
+  [1m[36mList Load (0.2ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 10]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "lists" WHERE "lists"."id" = $1[0m  [["id", 10]]
+  [1m[35m (5.2ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.23ms)
+Completed 200 OK in 11ms (Views: 1.0ms | ActiveRecord: 6.2ms)
+
+
+Started POST "/lists" for 127.0.0.1 at 2017-12-18 19:03:47 -0500
+Processing by ListsController#create as */*
+  Parameters: {"list"=>{"title"=>"Some List"}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "lists" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "Some List"], ["created_at", "2017-12-19 00:03:47.849390"], ["updated_at", "2017-12-19 00:03:47.849390"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 11]]
+[active_model_serializers] Rendered ListSerializer with ActiveModelSerializers::Adapter::Attributes (5.33ms)
+Completed 200 OK in 10ms (Views: 5.8ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 19:21:54 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.8ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 8]]
+[active_model_serializers]   [1m[36mTask Load (0.7ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 11]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (7.48ms)
+Completed 200 OK in 11ms (Views: 8.3ms | ActiveRecord: 2.0ms)
+
+
+Started DELETE "/lists/11" for 127.0.0.1 at 2017-12-18 19:22:19 -0500
+Processing by ListsController#destroy as */*
+  Parameters: {"id"=>"11", "list"=>{}}
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 11]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "lists" WHERE "lists"."id" = $1[0m  [["id", 11]]
+  [1m[35m (5.4ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.1ms)
+Completed 200 OK in 10ms (Views: 0.6ms | ActiveRecord: 6.7ms)
+
+
+Started DELETE "/tasks/11" for 127.0.0.1 at 2017-12-18 19:22:29 -0500
+Processing by TasksController#destroy as */*
+  Parameters: {"id"=>"11", "task"=>{}}
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 11]]
+  [1m[35m (5.4ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.06ms)
+Completed 200 OK in 10ms (Views: 0.5ms | ActiveRecord: 6.3ms)
+
+
+Started DELETE "/lists/8" for 127.0.0.1 at 2017-12-18 19:22:41 -0500
+Processing by ListsController#destroy as */*
+  Parameters: {"id"=>"8", "list"=>{}}
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 8]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 10]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "lists" WHERE "lists"."id" = $1[0m  [["id", 8]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.11ms)
+Completed 200 OK in 11ms (Views: 1.1ms | ActiveRecord: 4.2ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 19:23:14 -0500
+Processing by ListsController#index as HTML
+  [1m[36mList Load (0.8ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (0.07ms)
+Completed 200 OK in 3ms (Views: 2.1ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/lists" for 127.0.0.1 at 2017-12-18 19:23:21 -0500
+Processing by ListsController#create as */*
+  Parameters: {"list"=>{"title"=>"New List"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "lists" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "New List"], ["created_at", "2017-12-19 00:23:21.892579"], ["updated_at", "2017-12-19 00:23:21.892579"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ListSerializer with ActiveModelSerializers::Adapter::Attributes (2.01ms)
+Completed 200 OK in 7ms (Views: 2.8ms | ActiveRecord: 1.5ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 19:23:30 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"Some Task", "priority"=>"low", "list_id"=>12}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.8ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[35mSQL (1.9ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "Some Task"], ["priority", "low"], ["created_at", "2017-12-19 00:23:30.908042"], ["updated_at", "2017-12-19 00:23:30.908042"], ["list_id", 12]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered TaskSerializer with ActiveModelSerializers::Adapter::Attributes (0.53ms)
+Completed 200 OK in 12ms (Views: 1.1ms | ActiveRecord: 3.4ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 19:23:40 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"Some Other Task", "priority"=>"High", "list_id"=>12}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "Some Other Task"], ["priority", "High"], ["created_at", "2017-12-19 00:23:40.453811"], ["updated_at", "2017-12-19 00:23:40.453811"], ["list_id", 12]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered TaskSerializer with ActiveModelSerializers::Adapter::Attributes (1.11ms)
+Completed 200 OK in 12ms (Views: 2.5ms | ActiveRecord: 1.9ms)
+
+
+Started POST "/lists" for 127.0.0.1 at 2017-12-18 19:23:49 -0500
+Processing by ListsController#create as */*
+  Parameters: {"list"=>{"title"=>"My List"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "lists" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "My List"], ["created_at", "2017-12-19 00:23:49.326472"], ["updated_at", "2017-12-19 00:23:49.326472"]]
+  [1m[35m (5.2ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 13]]
+[active_model_serializers] Rendered ListSerializer with ActiveModelSerializers::Adapter::Attributes (2.48ms)
+Completed 200 OK in 14ms (Views: 3.0ms | ActiveRecord: 6.1ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 19:24:03 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"My Task", "priority"=>"High", "list_id"=>13}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.2ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "My Task"], ["priority", "High"], ["created_at", "2017-12-19 00:24:03.656866"], ["updated_at", "2017-12-19 00:24:03.656866"], ["list_id", 13]]
+  [1m[35m (5.3ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered TaskSerializer with ActiveModelSerializers::Adapter::Attributes (0.52ms)
+Completed 200 OK in 12ms (Views: 1.2ms | ActiveRecord: 6.3ms)
+
+
+Started POST "/tasks" for 127.0.0.1 at 2017-12-18 19:24:08 -0500
+Processing by TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"Do This", "priority"=>"low", "list_id"=>13}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "Do This"], ["priority", "low"], ["created_at", "2017-12-19 00:24:08.572135"], ["updated_at", "2017-12-19 00:24:08.572135"], ["list_id", 13]]
+  [1m[35m (5.3ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered TaskSerializer with ActiveModelSerializers::Adapter::Attributes (0.39ms)
+Completed 200 OK in 12ms (Views: 0.9ms | ActiveRecord: 6.3ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 19:24:10 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (2.5ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (2.0ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers]   [1m[36mTask Load (2.1ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 13]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (11.18ms)
+Completed 200 OK in 19ms (Views: 12.3ms | ActiveRecord: 6.6ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 19:31:15 -0500
+Processing by ListsController#index as */*
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers]   [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 13]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (25.6ms)
+Completed 200 OK in 51ms (Views: 32.6ms | ActiveRecord: 9.8ms)
+
+
+Started DELETE "/lists/13" for 127.0.0.1 at 2017-12-18 19:31:37 -0500
+Processing by ListsController#destroy as */*
+  Parameters: {"id"=>"13", "list"=>{}}
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 13]]
+  [1m[35mSQL (0.7ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 15]]
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 16]]
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "lists" WHERE "lists"."id" = $1[0m  [["id", 13]]
+  [1m[35m (5.3ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.08ms)
+Completed 200 OK in 17ms (Views: 2.3ms | ActiveRecord: 7.8ms)
+
+
+Started GET "/lists" for 127.0.0.1 at 2017-12-18 19:32:34 -0500
+Processing by ListsController#index as HTML
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (2.99ms)
+Completed 200 OK in 5ms (Views: 4.0ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/tasks" for 127.0.0.1 at 2017-12-18 19:32:52 -0500
+Processing by TasksController#index as HTML
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+[active_model_serializers]   [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE List Load (0.1ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (6.29ms)
+Completed 200 OK in 9ms (Views: 8.0ms | ActiveRecord: 0.8ms)
+
+
+Started DELETE "/tasks/14" for 127.0.0.1 at 2017-12-18 19:33:12 -0500
+Processing by TasksController#destroy as */*
+  Parameters: {"id"=>"14", "task"=>{}}
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 14]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.11ms)
+Completed 200 OK in 5ms (Views: 0.6ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/tasks" for 127.0.0.1 at 2017-12-18 19:33:16 -0500
+Processing by TasksController#index as HTML
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+[active_model_serializers]   [1m[36mList Load (0.2ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (2.03ms)
+Completed 200 OK in 4ms (Views: 3.5ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/tasks" for 127.0.0.1 at 2017-12-19 08:58:18 -0500
+Processing by TasksController#index as HTML
+  [1m[36mTask Load (2.8ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+[active_model_serializers]   [1m[36mList Load (2.0ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (7.03ms)
+Completed 200 OK in 22ms (Views: 16.0ms | ActiveRecord: 4.8ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 12:33:52 -0500
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (uninitialized constant Api):
+  
+activesupport (5.1.4) lib/active_support/inflector/methods.rb:269:in `const_get'
+activesupport (5.1.4) lib/active_support/inflector/methods.rb:269:in `block in constantize'
+activesupport (5.1.4) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.4) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.4) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.4) lib/action_dispatch/http/request.rb:85:in `controller_class_for'
+actionpack (5.1.4) lib/action_dispatch/http/request.rb:78:in `controller_class'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:50:in `block in serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:834:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+activerecord (5.1.4) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.4) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 12:34:20 -0500
+  
+ActionController::RoutingError (uninitialized constant Api):
+  
+activesupport (5.1.4) lib/active_support/inflector/methods.rb:269:in `const_get'
+activesupport (5.1.4) lib/active_support/inflector/methods.rb:269:in `block in constantize'
+activesupport (5.1.4) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.4) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.4) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.4) lib/action_dispatch/http/request.rb:85:in `controller_class_for'
+actionpack (5.1.4) lib/action_dispatch/http/request.rb:78:in `controller_class'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:50:in `block in serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:834:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+activerecord (5.1.4) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.4) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/api/v1/tasks" for 127.0.0.1 at 2017-12-19 12:34:36 -0500
+  
+ActionController::RoutingError (uninitialized constant Api):
+  
+activesupport (5.1.4) lib/active_support/inflector/methods.rb:269:in `const_get'
+activesupport (5.1.4) lib/active_support/inflector/methods.rb:269:in `block in constantize'
+activesupport (5.1.4) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.4) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.4) lib/active_support/inflector/methods.rb:267:in `constantize'
+actionpack (5.1.4) lib/action_dispatch/http/request.rb:85:in `controller_class_for'
+actionpack (5.1.4) lib/action_dispatch/http/request.rb:78:in `controller_class'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:50:in `block in serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:834:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+activerecord (5.1.4) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.4) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 12:38:22 -0500
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.9ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (42.39ms)
+Completed 200 OK in 92ms (Views: 68.0ms | ActiveRecord: 16.2ms)
+
+
+Started POST "/api/v1/lists" for 127.0.0.1 at 2017-12-19 12:38:44 -0500
+Processing by Api::V1::ListsController#create as */*
+  Parameters: {"list"=>{"title"=>"New List 2"}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.3ms)[0m  [1m[32mINSERT INTO "lists" ("title", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["title", "New List 2"], ["created_at", "2017-12-19 17:38:44.231161"], ["updated_at", "2017-12-19 17:38:44.231161"]]
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 14]]
+[active_model_serializers] Rendered ListSerializer with ActiveModelSerializers::Adapter::Attributes (3.55ms)
+Completed 200 OK in 39ms (Views: 3.7ms | ActiveRecord: 16.1ms)
+
+
+Started POST "/api/v1/tasks" for 127.0.0.1 at 2017-12-19 12:38:49 -0500
+Processing by Api::V1::TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"task 1", "priority"=>"low", "list_id"=>12}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "task 1"], ["priority", "low"], ["created_at", "2017-12-19 17:38:49.044968"], ["updated_at", "2017-12-19 17:38:49.044968"], ["list_id", 12]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered TaskSerializer with ActiveModelSerializers::Adapter::Attributes (1.36ms)
+Completed 200 OK in 14ms (Views: 2.7ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 12:39:26 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (1.2ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.9ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers]   [1m[36mTask Load (1.7ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 14]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (9.3ms)
+Completed 200 OK in 14ms (Views: 9.5ms | ActiveRecord: 3.8ms)
+
+
+Started POST "/api/v1/tasks" for 127.0.0.1 at 2017-12-19 12:39:38 -0500
+Processing by Api::V1::TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"New tasj", "priority"=>"High", "list_id"=>14}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "New tasj"], ["priority", "High"], ["created_at", "2017-12-19 17:39:38.706748"], ["updated_at", "2017-12-19 17:39:38.706748"], ["list_id", 14]]
+  [1m[35m (5.6ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered TaskSerializer with ActiveModelSerializers::Adapter::Attributes (0.69ms)
+Completed 200 OK in 13ms (Views: 1.4ms | ActiveRecord: 6.8ms)
+
+
+Started DELETE "/api/v1/tasks/17" for 127.0.0.1 at 2017-12-19 12:39:44 -0500
+Processing by Api::V1::TasksController#destroy as */*
+  Parameters: {"id"=>"17", "task"=>{}}
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT  "tasks".* FROM "tasks" WHERE "tasks"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (5.6ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 17]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.08ms)
+Completed 200 OK in 17ms (Views: 7.0ms | ActiveRecord: 6.8ms)
+
+
+Started DELETE "/api/v1/lists/14" for 127.0.0.1 at 2017-12-19 12:39:53 -0500
+Processing by Api::V1::ListsController#destroy as */*
+  Parameters: {"id"=>"14", "list"=>{}}
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 14]]
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "tasks" WHERE "tasks"."id" = $1[0m  [["id", 18]]
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "lists" WHERE "lists"."id" = $1[0m  [["id", 14]]
+  [1m[35m (5.4ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.14ms)
+Completed 200 OK in 14ms (Views: 0.9ms | ActiveRecord: 7.1ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 13:04:10 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (1.6ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (6.18ms)
+Completed 200 OK in 12ms (Views: 9.3ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 13:09:44 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.8ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.41ms)
+Completed 200 OK in 9ms (Views: 7.6ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/tasks" for 127.0.0.1 at 2017-12-19 13:17:56 -0500
+  
+ActionController::RoutingError (No route matches [GET] "/tasks"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/api/v1tasks" for 127.0.0.1 at 2017-12-19 13:18:09 -0500
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1tasks"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/api/v1/tasks" for 127.0.0.1 at 2017-12-19 13:18:13 -0500
+Processing by Api::V1::TasksController#index as HTML
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+[active_model_serializers]   [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (2.4ms)
+Completed 200 OK in 5ms (Views: 3.7ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 13:20:12 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.8ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.37ms)
+Completed 200 OK in 8ms (Views: 6.4ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/api/v1/tasks" for 127.0.0.1 at 2017-12-19 13:20:20 -0500
+Processing by Api::V1::TasksController#index as HTML
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+[active_model_serializers]   [1m[36mList Load (0.5ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (2.78ms)
+Completed 200 OK in 6ms (Views: 4.4ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-12-19 20:31:58 -0500
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/priyamsarma/.rvm/gems/ruby-2.3.3/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/priyamsarma/.rvm/gems/ruby-2.3.3/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb (3.8ms)
+Completed 200 OK in 11ms (Views: 8.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/tasks" for 127.0.0.1 at 2017-12-19 20:32:02 -0500
+  
+ActionController::RoutingError (No route matches [GET] "/tasks"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/api/v1/tasks" for 127.0.0.1 at 2017-12-19 20:32:14 -0500
+Processing by Api::V1::TasksController#index as HTML
+  [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+[active_model_serializers]   [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (33.22ms)
+Completed 200 OK in 92ms (Views: 66.7ms | ActiveRecord: 17.3ms)
+
+
+Started POST "/api/v1/tasks" for 127.0.0.1 at 2017-12-19 20:33:44 -0500
+Processing by Api::V1::TasksController#create as */*
+  Parameters: {"task"=>{"description"=>"Add", "priority"=>"low", "list_id"=>12}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "tasks" ("description", "priority", "created_at", "updated_at", "list_id") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["description", "Add"], ["priority", "low"], ["created_at", "2017-12-20 01:33:44.318110"], ["updated_at", "2017-12-20 01:33:44.318110"], ["list_id", 12]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered TaskSerializer with ActiveModelSerializers::Adapter::Attributes (0.55ms)
+Completed 200 OK in 8ms (Views: 1.0ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/api/v1/tasks" for 127.0.0.1 at 2017-12-19 20:33:48 -0500
+Processing by Api::V1::TasksController#index as HTML
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks"[0m
+[active_model_serializers]   [1m[36mList Load (0.9ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE List Load (0.0ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (6.2ms)
+Completed 200 OK in 9ms (Views: 7.4ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 20:38:39 -0500
+Processing by Api::V1::ListsController#index as HTML
+  [1m[36mList Load (0.9ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (11.96ms)
+Completed 200 OK in 16ms (Views: 13.9ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 21:24:09 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (1.1ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.99ms)
+Completed 200 OK in 9ms (Views: 6.9ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 21:27:14 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (3.7ms)
+Completed 200 OK in 6ms (Views: 5.2ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 21:27:26 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (3.09ms)
+Completed 200 OK in 5ms (Views: 4.3ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 21:27:54 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.25ms)
+Completed 200 OK in 7ms (Views: 5.9ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 21:28:56 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.07ms)
+Completed 200 OK in 7ms (Views: 5.3ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 21:32:26 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.5ms)
+Completed 200 OK in 8ms (Views: 6.5ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 21:37:02 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.69ms)
+Completed 200 OK in 10ms (Views: 8.8ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 21:44:46 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (1.6ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (22.54ms)
+Completed 200 OK in 27ms (Views: 23.9ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 21:45:28 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (4.0ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (7.13ms)
+Completed 200 OK in 11ms (Views: 6.3ms | ActiveRecord: 4.7ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 21:45:53 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.7ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.43ms)
+Completed 200 OK in 9ms (Views: 6.6ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 21:47:36 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.08ms)
+Completed 200 OK in 8ms (Views: 6.7ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 21:54:37 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.5ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (3.33ms)
+Completed 200 OK in 6ms (Views: 5.1ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 21:54:38 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.8ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (1.0ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (5.61ms)
+Completed 200 OK in 10ms (Views: 7.8ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 21:57:15 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (3.0ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (1.8ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (5.13ms)
+Completed 200 OK in 14ms (Views: 9.5ms | ActiveRecord: 4.8ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 21:59:20 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (3.93ms)
+Completed 200 OK in 9ms (Views: 7.4ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 22:05:25 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.9ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.7ms)
+Completed 200 OK in 9ms (Views: 7.5ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 22:09:47 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (1.0ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.64ms)
+Completed 200 OK in 11ms (Views: 9.5ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 22:15:36 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (3.17ms)
+Completed 200 OK in 6ms (Views: 5.5ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 22:20:08 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.09ms)
+Completed 200 OK in 9ms (Views: 7.4ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 22:23:31 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.8ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.9ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.47ms)
+Completed 200 OK in 8ms (Views: 6.0ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 22:27:13 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (3.94ms)
+Completed 200 OK in 7ms (Views: 5.6ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 22:27:15 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (2.1ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.7ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.77ms)
+Completed 200 OK in 11ms (Views: 8.3ms | ActiveRecord: 2.8ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 22:27:16 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (1.2ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (1.0ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (4.99ms)
+Completed 200 OK in 9ms (Views: 6.4ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 22:29:55 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (5.2ms)
+Completed 200 OK in 10ms (Views: 8.8ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 22:30:42 -0500
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (3.87ms)
+Completed 200 OK in 8ms (Views: 6.6ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/api/v1/lists" for 127.0.0.1 at 2017-12-19 22:43:22 -0500
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::ListsController#index as */*
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT "lists".* FROM "lists"[0m
+[active_model_serializers]   [1m[36mTask Load (0.1ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."list_id" = $1[0m  [["list_id", 12]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (17.82ms)
+Completed 200 OK in 43ms (Views: 24.8ms | ActiveRecord: 11.0ms)
+
+
+Started GET "/api/v1/notes" for 127.0.0.1 at 2017-12-20 10:07:59 -0500
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/notes"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/api/v1/notes" for 127.0.0.1 at 2017-12-20 10:08:36 -0500
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/notes"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.11.0) lib/puma/configuration.rb:225:in `call'
+puma (3.11.0) lib/puma/server.rb:624:in `handle_request'
+puma (3.11.0) lib/puma/server.rb:438:in `process_client'
+puma (3.11.0) lib/puma/server.rb:302:in `block in run'
+puma (3.11.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
